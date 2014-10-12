@@ -1,0 +1,132 @@
+html {
+    background-color: #EDEDED;
+}
+
+a {
+    text-shadow: none;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1, h2 {
+    color: #46B6FF;
+}
+h1 strong, h2 strong {
+    color: #3B5999;
+}
+
+.backbone-sync h1, .app h1, .server h1 {
+    font-size: 3em;
+}
+
+.cc {
+    position: absolute;
+    top: 50%;
+    margin-top: -.6em;
+    width: 100%;
+    text-align: center;
+    line-height: 1;
+}
+    .cc pre {
+        padding: 0;
+    }
+    .cc--huge {
+        font-size: 4em;
+    }
+
+.cc--mline.cc pre {
+    margin: auto;
+    text-align: left;
+    width: 80%;
+}
+
+.semantics pre {
+    display: inline;
+    color: #000;
+}
+
+.anger {
+    background: url('img/anger.gif') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    color: #fff;
+}
+    .slide.anger h1 {
+        color: #fff;
+        top: auto;
+        bottom: 10%;
+    }
+    .anger strong {
+        color: #fff;
+    }
+    .slide li {
+        font-size: 4em;
+    }
+
+.happy {
+    background: url('img/happy.gif') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    color: #fff;
+}
+
+.slow {
+    background: url('img/slow.gif') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    color: #000;
+    text-align: right;
+}
+
+.hi {
+    background: url('img/hi.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    text-align: right;
+}
+
+.hi--highlighted {
+    background: url('img/hi--highlighted.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    text-align: right;
+}
+
+.sandbox {
+    background: url('img/sandbox-model.png') no-repeat center center fixed;
+    -webkit-background-size: contain;
+}
+
+.dirs {
+    background: url('img/dirs.png') no-repeat center center fixed;
+    -webkit-background-size: contain;
+}
+
+.quote {
+    margin-top: 10%;
+    background: rgba(70, 182, 255, 0.85);
+    font-style: italic;
+}
+
+    .quote .text {
+        width: 98%;
+        font-size: 4rem;
+        text-align: center;
+    }
+
+    .quote .text:before {
+        content: "\"";
+    }
+
+    .quote .text:after {
+        content: "\"";
+    }
+
+    .quote .person {
+        width: 98%;
+        font-style: italic;
+        text-align: right;
+    }
+
+    .quote .person:before {
+        content: "- ";
+    }

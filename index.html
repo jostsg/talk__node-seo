@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<title>How Node.js beat SEO</title>
+	
+	<link href="slideshow.css" rel="stylesheet" />
+	<link href="theme.css" rel="stylesheet" />
+	<link href="talk.css" rel="stylesheet" />
+	<script src="prefixfree.min.js"></script>
+</head>
+<body data-duration="20">
+
+<section>
+	<header id="intro" class="slide">
+		<h1>how <strong>node.js</strong> beat seo</h1>
+	</header>
+</section>
+
+<section>
+    <header class="slide anger">
+        <h1 class="delayed">SEO and <strong>JavaScript</strong></h1>
+    </header>
+
+    <header class="slide">
+        <h1>share<strong>code</strong></h1>
+    </header>
+
+    <header class="slide">
+        <h1>server<strong>side</strong></h1>
+    </header>
+</section>
+
+<section>
+    <header class="slide">
+        <pre><code lang="javascript">// /hotels/:id
+function run ( id ) {
+    var Hotel = Backbone.Model.extend( { urlRoot : "/hotels" } );
+    var hotel = new Hotel( { id: id } );
+
+    hotel.on( "change", function ( hotel ) {
+        $el.html(
+            Templates[ "hotel" ]( hotel ) );
+    });
+
+    hotel.fetch();
+}</code></pre>
+    </header>
+
+    <section class="slide">
+        <pre><code lang="javascript">// /hotels/:id</code></pre>
+        <pre><code lang="javascript">function run ( id ) {</code></pre>
+        <pre class="delayed"><code lang="javascript">    var Hotel = Backbone.Model.extend( { urlRoot : "/hotels" } );</code></pre>
+        <pre class="delayed"><code lang="javascript">    var hotel = new Hotel( { id: id } );
+    hotel.on( "change", function ( hotel ) {</code></pre>
+        <pre class="delayed"><code lang="javascript">    $el.html(</code></pre>
+        <pre class="delayed"><code lang="javascript">        Templates[ "hotel" ]( hotel ) );</code></pre>
+        <pre class="delayed"><code lang="javascript">    });</code></pre>
+        <pre class="delayed"><code lang="javascript">    hotel.fetch();</code></pre>
+        <pre><code lang="javascript">}</code></pre>
+    </section>
+
+    <section class="slide">
+        <div class="cc">
+            <pre><code lang="javascript">server.get( "/hotels/:id", ( req ) => run( req.params.id ) );</code></pre>
+        </div>
+    </section>
+
+    <header class="slide">
+        <h1>backbone<strong>model</strong></h1>
+    </header>
+
+    <header class="slide">
+        <h1>dependency<strong>injection</strong></h1>
+        <!-- we want to have different things added to backbone depending on the environment -->
+        <!-- app shoudn't be environment agnostic -->
+    </header>
+
+    <section class="slide">
+        <div class="cc">
+            <pre><code lang="javascript">run( id, Backbone );</code></pre>
+        </div>
+    </section>
+
+    <header class="slide">
+        <div class="cc cc--huge">
+            <pre><code lang="javascript">$el.<span>html()</span></h1></code></pre>
+        </div>
+    </header>
+
+    <header class="slide slow">
+        <ul>
+            <li class="delayed">slow</li>
+            <li class="delayed">leaky</li>
+        </ul>
+    </header>
+
+    <header class="slide">
+        <h1><strong>semantics</strong> don't matter</h1>
+    </header>
+
+    <section class="slide semantics">
+        <div class="cc">
+            <h1>
+                <strong>&lt;script&gt;</strong>
+                <pre><code lang="javascript">console.log( "asdf" );</code></pre>
+                <strong>&lt;/script&gt;</strong>
+            </h1>
+        </div>
+    </section>
+
+    <section class="slide semantics">
+        <div class="cc">
+            <h1>
+                <strong>&lt;div&gt;</strong>
+                <pre><code lang="javascript">console.log( "asdf" );</code></pre>
+                <strong>&lt;/div&gt;</strong>
+            </h1>
+        </div>
+    </section>
+
+    <header class="slide">
+        <h1>fb55/<strong>htmlparser2</strong></h1>
+    </header>
+
+<!--     <section class="slide">
+        <pre><code lang="javascript">{
+    "type": "script",
+    "name": "script",
+    "attribs": {},
+    "children": [
+        {
+            "data": "console.log( \"asdf\" );",
+            "type": "text",
+            "next": null,
+            "prev": null,
+            "parent": {...}
+        }
+    ],
+    "next": null,
+    "prev": null,
+    "parent": null
+}</code></pre>
+    </section>-->
+
+    <header class="slide">
+        <h1>+ <strong>jQuery</strong> interface</h1>
+    </header>
+
+    <header class="slide">
+        <div class="cc">
+            <pre><code lang="javascript">run( id, Backbone, $( "div" ) );</code></pre>
+        </div>
+    </header>
+
+    <header class="slide">
+        <div class="cc">
+            <pre><code lang="javascript">Templates[ "hotel" ]( hotel );</code></pre>
+        </div>
+    </header>
+
+    <header class="slide">
+        <h1><strong>compile</strong>step</h1>
+    </header>
+
+    <header class="slide">
+        <div class="cc cc--mline">
+            <pre><code lang="javascript">var Templates = {
+    "hotel": Handlebars.template( require( "./hotel.html" ) )
+};</code></pre>
+        </div>
+    </header>
+
+    <header class="slide">
+        <div class="cc">
+            <pre><code lang="javascript">run( id, Backbone, $( "div" ), Templates );</code></pre>
+        </div>
+    </header>
+
+    <header class="slide">
+        <div class="cc cc--huge">
+            <pre><code lang="javascript">hotel.<span>fetch()</span></h1></code></pre>
+        </div>
+    </header>
+
+    <header class="slide">
+        <h1>no<strong>xhr</strong></h1>
+    </header>
+
+    <section class="slide backbone-sync">
+        <h1><strong>backbone</strong>sync</h1>
+        <pre><code lang="javascript">Backbone.sync = function ( method, model ) {
+    if ( method == "read" ) {
+        request( model.url(), /* ... */ );
+    }
+    /* ... */
+};</code></pre>
+    </section>
+
+    <section class="slide app">
+        <h1><strong>app</strong></h1>
+        <pre><code lang="javascript">function run ( id, Backbone, $el, Templates ) {
+    var Hotel = Backbone.Model.extend( { urlRoot : "/hotels" } );
+    var hotel = new Hotel( { id: id } );
+
+    hotel.on( "change", function ( hotel ) {
+        $el.html(
+            Templates[ "hotel" ]( hotel ) );
+    });
+
+    hotel.fetch();
+}</code></pre>
+    </section>
+
+    <header class="slide">
+        <h1>one<strong>response</strong></h1>
+    </header>
+
+    <header class="slide">
+        <h1><strong>done</strong>();</h1>
+    </header>
+
+    <section class="slide app">
+        <h1><strong>app</strong></h1>
+        <pre><code lang="javascript">function run ( id, Backbone, $el, Templates, done ) {
+    var Hotel = Backbone.Model.extend( { urlRoot : "/hotels" } );
+    var hotel = new Hotel( { id: id } );
+
+    hotel.on( "change", function ( hotel ) {
+        $el.html(
+            Templates[ "hotel" ]( hotel ) );
+        done();
+    }
+
+    hotel.fetch();
+}</code></pre>
+    </section>
+
+    <section class="slide server">
+        <h1><strong>server</strong></h1>
+        <pre><code lang="javascript">var Backbone = require( "backbone" );
+var $ = require( "tready-dom" );
+var Handlebars = require( "handlebars" );
+var Templates = { "hotel": Handlebars.template( require( "./hotel.html" ) ) };
+
+server.get( "/hotels/:id", 
+    function ( req, res, next ) {
+        req.mnug.$el = $( "div" );
+        run( req.params.id, Backbone, req.mnug.$el, Templates, next ) );
+    }, function ( req, res ) {
+        res.send( req.mnug.$el.html() );
+    }
+);
+
+server.listen( 80 );
+        </code></pre>
+    </section>
+    
+    <section class="slide hi"></section>
+
+    <section class="slide hi--highlighted"></section>
+
+    <section class="slide sandbox"></section>
+
+    <section class="slide app">
+        <h1><strong>app</strong></h1>
+        <pre><code lang="javascript">module.exports = function ( sandbox ) {
+
+    var Hotel = sandbox.mvc.Model.extend( { urlRoot : "/hotels" } );
+
+    return sandbox.mvc.App.extend( {
+
+        $el: sandbox.context.element,
+
+        constructor: function () {
+            this.hotel = new Hotel( { id: id } );
+            this.hotel.on( "change", render, this );
+        },
+
+        render: function ( hotel ) {
+            this.$el.html( sandbox.templates.render( "hotel", hotel ) );
+            this.trigger( "ready" );
+        },
+
+        run: function ( params ) {
+            this.hotel.fetch();
+        }
+    });
+};</code></pre>
+    </section>
+
+    <section class="slide hi--highlighted"></section>
+
+    <section class="slide app">
+        <h1><strong>routes</strong>.js</h1>
+        <pre><code lang="javascript">module.exports = {
+    "/hotels/:id": {
+        outlet: "./templates/hotel-index.html",
+        apps: [ { name: "hotel-app" } ]
+    }
+};</code></pre>
+        <h1><strong>hotel-index</strong>.html</h1>
+        <pre><code lang="javascript">{{app "hotel-app"}}</code></pre>
+    </section>
+
+    <section class="slide dirs"></section>
+
+    <header class="slide">
+        <h1><strong>trigger</strong>ready</h1>
+    </header>
+
+    <header class="slide">
+        <h1><strong>t</strong>ready</h1>
+    </header>
+
+    <header class="slide">
+        <h1><strong>t</strong>ready<strong>.js</strong></h1>
+    </header>
+</section>
+
+<section>
+    <header class="slide happy">
+        <ul>
+            <li class="delayed">seo</li>
+            <li class="delayed">cache</li>
+            <li class="delayed">js naysayer</li>
+            <li class="delayed">developer</li>
+        </ul>
+    </header>
+
+    <header class="slide">
+        <h1><strong>questions</strong></h1>
+    </header>
+</section>
+
+<script src="slideshow.js"></script>
+<script src="plugins/css-edit.js"></script>
+<script src="plugins/css-snippets.js"></script>
+<script src="plugins/css-controls.js"></script>
+<script src="plugins/code-highlight.js"></script>
+<script>
+var slideshow = new SlideShow();
+
+var snippets = document.querySelectorAll('.snippet');
+for(var i=0; i<snippets.length; i++) {
+	new CSSSnippet(snippets[i]);
+}
+
+var cssControls = document.querySelectorAll('.css-control');
+for(var i=0; i<cssControls.length; i++) {
+	new CSSControl(cssControls[i]);
+}
+</script>
+	
+</body>
+</html>

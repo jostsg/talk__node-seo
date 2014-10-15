@@ -10,7 +10,7 @@
 	<link href="talk.css" rel="stylesheet" />
 	<script src="prefixfree.min.js"></script>
 </head>
-<body data-duration="20">
+<body data-duration="30">
 
 <section>
 	<header id="intro" class="slide">
@@ -20,7 +20,15 @@
 
 <section>
     <header class="slide anger">
-        <h1 class="delayed">SEO and <strong>JavaScript</strong></h1>
+        <!-- <h1 class="delayed">SEO and <strong>JavaScript</strong></h1> -->
+    </header>
+
+    <header class="slide">
+        <h1><strong>assumption</strong></h1>
+    </header>
+
+    <header class="slide">
+        <h1><strong>javascript</strong>is<strong>bad</strong></h1>
     </header>
 
     <header class="slide">
@@ -90,10 +98,9 @@ function run ( id ) {
     </header>
 
     <header class="slide slow">
-        <ul>
+        <!-- <ul>
             <li class="delayed">slow</li>
-            <li class="delayed">leaky</li>
-        </ul>
+        </ul> -->
     </header>
 
     <header class="slide">
@@ -256,7 +263,10 @@ server.get( "/hotels/:id",
 server.listen( 80 );
         </code></pre>
     </section>
-    
+</section>
+
+<section>    
+
     <section class="slide hi"></section>
 
     <section class="slide hi--highlighted"></section>
@@ -274,7 +284,7 @@ server.listen( 80 );
         $el: sandbox.context.element,
 
         constructor: function () {
-            this.hotel = new Hotel( { id: id } );
+            this.hotel = new Hotel();
             this.hotel.on( "change", render, this );
         },
 
@@ -284,6 +294,7 @@ server.listen( 80 );
         },
 
         run: function ( params ) {
+            this.hotel.set( { id: params.id }, { silent: true } );
             this.hotel.fetch();
         }
     });
